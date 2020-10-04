@@ -13,5 +13,6 @@ public class DockerContainer {
     private String contaier_id;
     private String container_name;
     private String image_id;
+    private String image_name;
 
 }
