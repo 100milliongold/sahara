@@ -13,7 +13,6 @@ import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerConfig;
 import com.spotify.docker.client.messages.ContainerCreation;
 import com.spotify.docker.client.messages.HostConfig;
-import com.spotify.docker.client.messages.Image;
 import com.spotify.docker.client.messages.PortBinding;
 
 import org.springframework.beans.factory.annotation.Autowired;
