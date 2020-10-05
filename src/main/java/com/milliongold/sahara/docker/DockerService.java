@@ -3,14 +3,17 @@ package com.milliongold.sahara.docker;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import com.milliongold.sahara.models.DockerContainer;
+import com.milliongold.sahara.models.DockerImage;
 import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.Container;
 import com.spotify.docker.client.messages.ContainerConfig;
 import com.spotify.docker.client.messages.ContainerCreation;
 import com.spotify.docker.client.messages.HostConfig;
+import com.spotify.docker.client.messages.Image;
 import com.spotify.docker.client.messages.PortBinding;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,38 @@ public class DockerService {
         final String id = creation.id();
 
         return id;
+    }
+
+    public String startContainer(String containerId) throws DockerException, InterruptedException {
+        docker.startContainer(containerId);
+        return containerId;
+    }
+
+    public String stopContainer(String containerId) throws DockerException, InterruptedException {
+        docker.stopContainer(containerId, 0);
+        return containerId;
+    }
+
+    public String deleteContainer(String containerId) throws DockerException, InterruptedException {
+        docker.removeContainer(containerId);
+        return containerId;
+    }
+
+    public List<DockerImage> getImageList() throws DockerException, InterruptedException {
+        return docker.listImages().stream().flatMap(image -> {
+            String image_id = image.id();
+            Long size = image.size();
+            return image.repoTags().stream().map(tag -> {
+                DockerImage res = new DockerImage();
+                String[] tags = tag.split(":");
+
+                res.setImage_id(image_id);
+                res.setImage_name(tags[0]);
+                res.setImage_tag(tags[1]);
+                res.setSize(size);
+                return res;
+            });
+        }).collect(Collectors.toList());
     }
 
 }

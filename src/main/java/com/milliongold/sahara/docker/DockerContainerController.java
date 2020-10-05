@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1/docker/container")
-public class DockerController {
+public class DockerContainerController {
 
     @Autowired
     private DockerService docker;
@@ -58,7 +58,11 @@ public class DockerController {
      */
     @PostMapping("/{id}/start")
     public ResponseEntity<?> startContainer(@PathVariable("id") String id) {
-        return null;
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(docker.startContainer(id));
+        } catch (DockerException | InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     /**
@@ -69,7 +73,11 @@ public class DockerController {
      */
     @PostMapping("/{id}/stop")
     public ResponseEntity<?> stopContainer(@PathVariable("id") String id) {
-        return null;
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(docker.stopContainer(id));
+        } catch (DockerException | InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     /**
@@ -80,6 +88,10 @@ public class DockerController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteContainer(@PathVariable("id") String id) {
-        return null;
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(docker.deleteContainer(id));
+        } catch (DockerException | InterruptedException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
