@@ -1,21 +1,14 @@
-import { deprecated, createAsyncAction } from "typesafe-actions";
+import { createAsyncAction } from "typesafe-actions";
+import { ContainerType } from "../../api/container";
 import { AxiosError } from "axios";
-import { DockerContainer } from "../../api/container";
 
-const { createStandardAction } = deprecated;
+export const GET_CONTAINER_LIST = "container/GET_CONTAINER_LIST";
+export const GET_CONTAINER_LIST_SUCCESS =
+  "container/GET_CONTAINER_LIST_SUCCESS";
+export const GET_CONTAINER_LIST_ERROR = "container/GET_CONTAINER_LIST_ERROR";
 
-// 액션 type
-export const GET_CONTAINER = "container/GET_CONTAINER";
-export const CREATE_CONTAINER = "container/CREATE_CONTAINER";
-export const REMOVE_CONTAINER = "container/REMOVE_CONTAINER";
-
-// 액션 생성 함수
-export const getContaier = createStandardAction(GET_CONTAINER)<string>();
-export const createContainer = createStandardAction(CREATE_CONTAINER)<number>();
-export const removeContainer = createStandardAction(REMOVE_CONTAINER)<number>();
-
-export const getUserProfileAsync = createAsyncAction(
-  GET_CONTAINER,
-  CREATE_CONTAINER,
-  REMOVE_CONTAINER
-)<string, DockerContainer, AxiosError>();
+export const getContainerListAsync = createAsyncAction(
+  GET_CONTAINER_LIST,
+  GET_CONTAINER_LIST_SUCCESS,
+  GET_CONTAINER_LIST_ERROR
+)<string, ContainerType, AxiosError>();

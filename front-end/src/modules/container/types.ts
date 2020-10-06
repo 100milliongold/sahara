@@ -1,4 +1,7 @@
 import { ActionType } from "typesafe-actions";
+import { ContainerType } from "../../api/container";
+import { AsyncState } from "../../lib/reducerUtils";
+
 import * as actions from "./actions";
 
 export type Container = {
@@ -8,4 +11,6 @@ export type Container = {
 
 export type ContainerAction = ActionType<typeof actions>;
 
-export type ContainerState = Container[];
+export type ContainerState = {
+  containerList: AsyncState<ContainerType, Error>;
+};
