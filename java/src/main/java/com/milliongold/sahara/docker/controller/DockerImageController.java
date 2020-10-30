@@ -1,5 +1,6 @@
-package com.milliongold.sahara.docker;
+package com.milliongold.sahara.docker.controller;
 
+import com.milliongold.sahara.docker.service.DockerService;
 import com.spotify.docker.client.exceptions.DockerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
